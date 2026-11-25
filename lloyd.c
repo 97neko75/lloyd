@@ -4,8 +4,8 @@
  * This release supports propositional proofs and a restricted Nat/equality
  * induction fragment. General arithmetic, definitions, imports, and dependent
  * types remain outside the implemented language subset.
- *BSD 3-Clause License
- *Copyright (c) 2026, 九七のねこ
+ * BSD 3-Clause License
+ * Copyright (c) 2026, 九七のねこ
  */
 #include <ctype.h>
 #include <errno.h>
