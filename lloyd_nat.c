@@ -3,6 +3,8 @@
  * Included by lloyd.c so the Windows build remains a single compiler command.
  * This module accepts the explicitly implemented grammar subset documented
  * in README.md; it is not a parser for every construct in the LRS-Alpha draft.
+ *BSD 3-Clause License
+ *Copyright (c) 2026, 九七のねこ
  */
 typedef enum { X_ZERO, X_VAR, X_SUCC, X_ADD, X_LAMBDA } XTermKind;
 typedef struct XTerm XTerm;
