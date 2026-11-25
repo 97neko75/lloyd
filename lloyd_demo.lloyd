@@ -1,0 +1,14 @@
+Axiom A : P
+Axiom B : Q
+
+Theorem swap : (P /\ Q) -> (Q /\ P)
+Proof
+  intro h : (P /\ Q) => (AndIntro h.2 h.1)
+.
+
+Theorem use_ax : P
+Proof
+  A
+.
+
+Print axioms use_ax
