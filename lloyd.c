@@ -1,13 +1,9 @@
 /*
- * Lloyd LRS-Alpha propositional checker, portable C11 edition.
+ * Standalone Lloyd LRS-Alpha checker in portable C11.
  *
- * This is a C port of the existing Python checker's supported fragment. It
- * deliberately does not certify equality, arithmetic, induction, definitions,
- *imports, dependent types, or the indentation-based natural-number example.
- 
- 
- *SPDX-License-Identifier: BSD-3-Clause
- *Copyright (c) 2026 97neko75
+ * This release supports propositional proofs and a restricted Nat/equality
+ * induction fragment. General arithmetic, definitions, imports, and dependent
+ * types remain outside the implemented language subset.
  */
 #include <ctype.h>
 #include <errno.h>
@@ -84,6 +80,7 @@ typedef struct { Binding *items; size_t count; size_t capacity; } Context;
 
 static char g_error[1024];
 static int g_error_line;
+static int x_check_extended(const char *source, int *handled);
 
 static void *xmalloc(size_t size) {
     void *p = malloc(size ? size : 1);
@@ -1174,6 +1171,11 @@ static int run_check(const char *path) {
     memset(&program, 0, sizeof program);
     g_error[0] = '\0';
     g_error_line = 0;
+    {
+        int handled = 0;
+        int status = x_check_extended(source, &handled);
+        if (handled) return status;
+    }
     if (!parse_source(&program, source) || !check_theorems(&program) || !validate_print_requests(&program)) {
         if (g_error_line) fprintf(stderr, "lloyd: line %d: %s\n", g_error_line, g_error);
         else fprintf(stderr, "lloyd: %s\n", g_error[0] ? g_error : "invalid source");
@@ -1215,3 +1217,5 @@ int main(int argc, char **argv) {
     usage(stderr);
     return 2;
 }
+
+#include "lloyd_nat.c"

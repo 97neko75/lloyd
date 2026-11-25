@@ -1,0 +1,20 @@
+Transparent Nat.add.
+Notation "+" on Nat precedence 60 left := Nat.add.
+
+Theorem add_comm.
+  Let n, m be Nat.
+  Claim: n + m = m + n.
+  Proof.
+    By induction on n.
+    Case n = Nat.zero.
+      Step zero_left: Nat.zero + m = m, by [Nat.zero_add m].
+      Step zero_right: m + Nat.zero = m, by [Nat.add_zero m].
+      Hence Nat.zero + m = m + Nat.zero by [trans zero_left (symm zero_right)].
+    Case n = Nat.succ k, with hypothesis ih_k: k + m = m + k.
+      Step s1: Nat.succ k + m = Nat.succ (k + m), by [Nat.succ_add k m].
+      Step s2: Nat.succ (k + m) = Nat.succ (m + k), by [congr (fun x => Nat.succ x) ih_k].
+      Step s3: Nat.succ (m + k) = m + Nat.succ k, by [symm (Nat.add_succ m k)].
+      Hence Nat.succ k + m = m + Nat.succ k by [trans s1 (trans s2 s3)].
+  QED.
+
+Print axioms add_comm.
